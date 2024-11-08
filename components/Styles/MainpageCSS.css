@@ -1,0 +1,162 @@
+/* Styles for the panel container */
+.Pane {
+  position: relative;
+  display: flex;
+  flex-direction: column; /* Organiza los hijos en una columna */
+  height: 100%; /* Asegúrate de que el contenedor Pane tenga una altura definida */
+}
+
+.titlePreview{
+
+  text-align: center;
+
+}
+
+.editor-header{
+  flex-shrink: 0;
+  background-color: #f8f9fa;
+  padding: 10px;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid #3d3d3d;
+}
+
+
+.input-container {
+  display: flex;
+  align-items: center; /* Aligns elements vertically */
+}
+
+.question-details{
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-row-gap: 1em;
+  width: 40%;
+  justify-items: left;
+  align-items: center;
+  padding-left: 1em;
+  margin-bottom: 1.5em;
+}
+
+.input-container label {
+  width: 200px; /* Adjust the width of the label as necessary */
+  font-size: 18px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+
+}
+
+.input-container input {
+  width: 300px; /* The input will occupy the entire remaining width */
+  margin-left:0;
+  margin-bottom: 10px;
+}
+
+.title {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* Styles for the span .textList */
+.textList {
+  display: block;      /* To make the margins work correctly */
+  margin: 20px 0;      /* 20px top and bottom margins */
+  font-size: 20px;
+}
+
+/* Styles for the tabs container */
+.tabs-container {
+  width: 100%;
+  text-align: center;
+}
+
+
+
+.nav-item {
+  flex: 0;
+  margin: 0; /* Remove margin between items */
+}
+
+/* Styles for the "Generate" button container */
+.button-container {
+  width: 100%;
+  text-align: center;
+  padding-top: 1em; /* Top margin to separate from the tabs */
+  margin-bottom: 1em; /* Bottom margin to separate from the bottom edge of the panel */
+  border-top: 1px solid #dde1e5;
+
+}
+
+.centered-button {
+  font-size: 16px;
+  padding: 10px 20px;
+  background-color: #333;
+  border: 2px solid #333;
+  border-radius: 5px;
+  margin:auto;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.centered-button:hover {
+  background-color: #555;
+}
+
+/* Styles for the .HTMLContent container */
+.HTMLContent {
+  margin-top: 10px;
+  margin-left: 40px;
+  margin-right: 35px;
+  width: 80%;
+  height: 70%;
+  background: green; /* Background color green */
+  padding: 40px; /* Internal padding of 40px on all sides */
+  box-sizing: border-box; /* Include padding within width and height */
+  flex: 6; /* Toma 6 partes del espacio disponible */
+}
+
+/* Styles for the .CMDContent container */
+.CMDContent {
+  flex: 2; /* Toma 2 partes del espacio disponible */
+  margin-top: 20px;
+  margin-left: 40px;
+  margin-right: 40px;
+  width: 80%;
+  height: 15%;
+  background: green; /* Background color green */
+  padding: 40px; /* Internal padding of 40px on all sides */
+  box-sizing: border-box; /* Include padding within width and height */
+}
+
+.MarkdownContent {
+  margin-left: 40px;
+  margin-right: 40px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.HTMLContent, .CMDContent {
+  padding: 0; /* Remove padding to allow the textarea to fully expand */
+}
+
+/* Sets the textarea to occupy 100% of the width and height of its container */
+.non-editable {
+  width: 100%; /* Full width */
+  box-sizing: border-box; /* Includes the padding and border in the total width and height */
+  height: 100%; /* Full stop */
+  padding-left: 16px;
+}
+
+.preview{
+  height: 100%;
+  overflow-y: hidden;
+  padding-top: 1em;
+  display: flex;
+  flex-flow: column;
+  padding-left: 4px;
+}
+

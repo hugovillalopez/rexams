@@ -1,0 +1,11 @@
+.latex-button {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-item{
+  margin-bottom: 0!important;
+}
+
