@@ -1,9 +1,9 @@
-import {FC, StrictMode, useRef} from "react";
+import {createContext, FC, StrictMode, useContext, useRef, useState} from "react";
 import {Milkdown, MilkdownProvider, useEditor} from "@milkdown/react";
 import { Editor } from "@milkdown/core";
 import {usePluginViewFactory, useNodeViewFactory, ProsemirrorAdapterProvider} from '@prosemirror-adapter/react';
 import { gfm } from "@milkdown/preset-gfm";
-import { commonmark, listItemSchema } from "@milkdown/preset-commonmark";
+import { commonmark, inlineCodeSchema, codeBlockSchema } from "@milkdown/preset-commonmark";
 import { nord } from "@milkdown/theme-nord";
 import { math, mathBlockSchema, mathInlineSchema} from "@milkdown/plugin-math";
 import { block } from "@milkdown/plugin-block";
@@ -25,6 +25,11 @@ import {oneDark} from "@codemirror/theme-one-dark";
 import { defaultKeymap } from '@codemirror/commands';
 import { keymap } from '@codemirror/view';
 import { html } from '@milkdown/kit/component';
+import {CodeBlock} from "./CodeBlock";
+import {
+    getChildrenNodesValues
+} from "@mantine/core/lib/components/Tree/get-children-nodes-values/get-children-nodes-values";
+import throttle from "lodash/throttle";
 
 const check = html`
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -42,6 +47,11 @@ const preventTitleInputRule = () => new InputRule(
         return tr;
     }
 );
+
+export const OnChangeContext = createContext<(formula: string) => void>(() => {});
+
+export const useOnChange = () => useContext(OnChangeContext);
+
 export interface MilkdownProps {
     markdown: string;
     onChange: (newMarkdown: string) => void;
@@ -50,7 +60,9 @@ export interface MilkdownProps {
 export const MilkdownEditor: FC<MilkdownProps> = ({ markdown, onChange }) => {
     const pluginViewFactory = usePluginViewFactory();
     const nodeViewFactory = useNodeViewFactory();
-    const editorRef = useRef<Editor | null>(null);
+    const editorRef = useRef<Editor | null >(null);
+    const [elemento, setElemento] = useState(null)
+
 
 
     const { get } = useEditor((root) => {
@@ -59,9 +71,27 @@ export const MilkdownEditor: FC<MilkdownProps> = ({ markdown, onChange }) => {
                 ctx.set(rootCtx, root);
                 ctx.set(defaultValueCtx, markdown);
 
-                ctx.get(listenerCtx).markdownUpdated((ctx,mark,prevMarkdown) => {
+                ctx.get(listenerCtx).markdownUpdated(throttle((ctx, updatedMarkdown, prevMarkdown) => {
+                        console.log("Markdown actualizado 2:", updatedMarkdown);  // Agregar verificación del valor
+                        onChange(updatedMarkdown);
+                    if (document.getElementById("code")){
+                        let code = document.getElementById("code").querySelectorAll(".milkdown")
+                        if (code.length > 1){
+                            code.item(1).remove()
+                        }
+                    }
+                        const f2 = prevMarkdown.replace(/\s+/g,'');
+                        const f = updatedMarkdown.replace(/\s+/g,'');
+                        if(f.substring(f.length - 4) == "$$$$") {
+                            if (f2.substring(f.length - 4) != "$$$$" && f.substring(f.length - 4) == "$$$$") {
+                                const p = document.createElement("p");
+                                p.appendChild(document.createElement("br"));
+                                document.getElementsByClassName("editor")[0].appendChild(p); // Usa el editorRoot directamente, ya es un Node.
+                            }
+                        }
+                    }, 200)
+                );
 
-                });
 
                 const customInputRules: InputRule[] = [
                     preventTitleInputRule()
@@ -73,14 +103,6 @@ export const MilkdownEditor: FC<MilkdownProps> = ({ markdown, onChange }) => {
                     pluginViewFactory({ component: BlockView }),
                 ]);
 
-                ctx.update(codeBlockConfig.key, defaultConfig => ({
-                    ...defaultConfig,
-                    languages,
-                    extensions: [basicSetup, oneDark, keymap.of(defaultKeymap)],
-                    renderLanguage: (language, selected) => {
-                        return html`<span class="leading">${selected ? check : null}</span>${language}`
-                    },
-                }))
 
             })
             .config(nord)
@@ -102,10 +124,15 @@ export const MilkdownEditor: FC<MilkdownProps> = ({ markdown, onChange }) => {
                     })
                 ),
                 math,
-                $view(listItemSchema.node,() =>
+                $view(inlineCodeSchema.mark,() =>
                     nodeViewFactory({
                         component: InlineCode,
-                    }),)
+                    }),),
+                $view(codeBlockSchema.node,() =>
+                    nodeViewFactory({
+                        component: CodeBlock,
+                    })
+                )
 
             ].flat())
             .use(block)
