@@ -1,5 +1,166 @@
-/* Alignment of elements to the left*/
-.inline-math {
-  cursor:pointer;
+/* Estilo para el bloque matemático inline */
+.math-inline-wrapper {
+  display: inline-flex;
+  user-select: none;
+  cursor: pointer;
+  vertical-align: baseline;
+  position: relative;
 }
 
+.inline-math {
+  margin: 0 0.2em;
+  padding: 4px 8px;
+  background-color: rgb(240, 240, 240);
+  color: black;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+  pointer-events: all;
+  position: relative;
+  z-index: 1;
+}
+
+.inline-math:hover {
+  background-color: rgb(255, 255, 255);
+}
+
+.pencil-icon {
+  display: inline-block;
+  margin-left: 8px;
+  vertical-align: middle;
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.inline-math:hover .pencil-icon {
+  opacity: 1;
+}
+
+.math-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(217, 208, 208, 0.93);
+  z-index: 999;
+}
+
+.math-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 80%;
+  max-width: 800px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgb(216, 212, 212);
+}
+
+.math-editor-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.math-textarea {
+  width: 100%;
+  height: 120px;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  resize: none;
+  font-family: monospace;
+  background-color: #f8f9fa;
+}
+
+.preview-container {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 16px;
+}
+
+.preview-label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.preview-content {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.button-cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+.button-cancel:hover {
+  background-color: #e53935;
+}
+
+.button-confirm {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.button-confirm:hover {
+  background-color: #45a049;
+}
+
+.math-toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.math-toolbar button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.math-toolbar button:hover {
+  background-color: #45a049;
+}

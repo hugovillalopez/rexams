@@ -21,8 +21,21 @@
 */
 .milkdown {
   @apply bg-slate-50 px-2 py-4 m-5 border rounded;
-  border: 1px solid black;
+  p > div > div,p>div,  .Inline > div {
+      width: 10px;
+      display: inline;
+      white-space: nowrap !important; /*Permite que el texto en código se ajuste sin romperse*/
+      word-wrap: break-word !important; /* Ajusta las palabras largas sin romper el contenedor*/
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-family: monospace;
 }
+  .Inline{
+      background-color: #b6b6b6;
+      color: #0000ff;
+  }
+}
+
 
 .editor {
 
@@ -70,7 +83,7 @@ milkdown-code-block {
   display: block;
   position: relative;
   padding: 24px 40px;
-  background: rgba(0, 0, 50, 057);
+  background: white;
   margin: 20px 0;
   border-radius: 5px;
 
@@ -102,7 +115,7 @@ milkdown-code-block {
   }
 
   .hidden {
-    display: none;
+    display: block;
   }
 
   .cm-editor {
@@ -112,17 +125,15 @@ milkdown-code-block {
   .language-button {
     gap: 8px;
     padding: 8px;
-    background: #333245;
+    background: #000000;
     border-radius: 8px;
     font-size: 14px;
     margin-bottom: 24px;
-    opacity: 0;
+    height: 50px;
+    width: 65px;
     transition: opacity 0.2s ease-in-out;
     color: white;
-  }
 
-  &:hover .language-button {
-    opacity: 1;
   }
 
   .language-button:hover {
@@ -231,4 +242,27 @@ milkdown-code-block {
 
 .cm-editor {
   @apply font-mono h-full xl:text-base lg:text-sm md:text-xs;
+}
+
+.katex-preview {
+  display: inline-block;
+  margin: 0 0.2em;
+  text-indent: 0;
+  background-color: #f8f9fa;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  border: 1px solid #e9ecef;
+}
+
+.katex-preview .katex {
+  display: inline-block;
+  text-rendering: auto;
+  font-size: 1.1em;
+  line-height: 1.2;
+}
+
+/* Otros estilos personalizados */
+.ProseMirror {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }

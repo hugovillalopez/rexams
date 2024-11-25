@@ -14,6 +14,11 @@ export default function Edicion(){
     const handleEditorChange = (newMarkdown: string) => {
         console.log("Markdown actualizado:\n", newMarkdown);
 
+        const markdownPreview = document.getElementById("markdown-preview");
+        if (markdownPreview) {
+            // Establecer el contenido como texto plano
+            markdownPreview.textContent = newMarkdown; // Muestra el texto como está, incluyendo '$' para las fórmulas
+        }
     };
 
     return (

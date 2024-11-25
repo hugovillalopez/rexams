@@ -19,16 +19,10 @@ import { $view } from "@milkdown/utils";
 import { InputRule } from "prosemirror-inputrules";
 //CodeBlock Config -------------------------------------
 import { codeBlockConfig, codeBlockComponent } from '@milkdown/kit/component/code-block';
-import {languages} from "@codemirror/language-data";
-import {basicSetup} from "codemirror";
-import {oneDark} from "@codemirror/theme-one-dark";
-import { defaultKeymap } from '@codemirror/commands';
-import { keymap } from '@codemirror/view';
+
 import { html } from '@milkdown/kit/component';
 import {CodeBlock} from "./CodeBlock";
-import {
-    getChildrenNodesValues
-} from "@mantine/core/lib/components/Tree/get-children-nodes-values/get-children-nodes-values";
+import {getChildrenNodesValues} from "@mantine/core/lib/components/Tree/get-children-nodes-values/get-children-nodes-values";
 import throttle from "lodash/throttle";
 
 const check = html`
@@ -80,13 +74,16 @@ export const MilkdownEditor: FC<MilkdownProps> = ({ markdown, onChange }) => {
                             code.item(1).remove()
                         }
                     }
+
+                    console.log(updatedMarkdown)
                         const f2 = prevMarkdown.replace(/\s+/g,'');
                         const f = updatedMarkdown.replace(/\s+/g,'');
                         if(f.substring(f.length - 4) == "$$$$") {
                             if (f2.substring(f.length - 4) != "$$$$" && f.substring(f.length - 4) == "$$$$") {
                                 const p = document.createElement("p");
                                 p.appendChild(document.createElement("br"));
-                                document.getElementsByClassName("editor")[0].appendChild(p); // Usa el editorRoot directamente, ya es un Node.
+                                root.querySelector(".editor").appendChild(p); // Usa el editorRoot directamente, ya es un Node.
+                                root.querySelector(".editor").querySelectorAll("p").item(root.querySelector(".editor").querySelectorAll("p").length -1)
                             }
                         }
                     }, 200)

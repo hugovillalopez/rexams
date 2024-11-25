@@ -1,8 +1,8 @@
 import { createRoot } from 'react-dom/client';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './components/Styles/EditorCodeBlockButton.css';
-import '@mantine/core/styles.css'
+//import './components/Styles/EditorCodeBlockButton.css';
+import '@mantine/core/styles.css';
 import Edicion from './components/EdicionHTML';
 import Preview from './components/Preview';
 import {MantineProvider, Grid} from "@mantine/core"; // Asegúrate de que este es el componente correcto
@@ -10,10 +10,15 @@ import {MantineProvider, Grid} from "@mantine/core"; // Asegúrate de que este e
 const root$ = document.getElementById('app');
 if (!root$) throw new Error('No root element found');
 
-/*const handleEditorChange = (newMarkdown: string) => {
+const handleEditorChange = (newMarkdown: string) => {
     console.log("Markdown actualizado:\n", newMarkdown);
 
-};*/
+    const markdownPreview = document.getElementById("markdown-preview");
+    if (markdownPreview) {
+        // Establecer el contenido como texto plano
+        markdownPreview.textContent = newMarkdown; // Muestra el texto como está, incluyendo '$' para las fórmulas
+    }
+};
 
 const root = createRoot(root$);
 
